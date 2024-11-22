@@ -47,37 +47,14 @@ app.get('/api/movies', async (req, res) => {
   res.json(movies);
 });
 
-
-app.get('/api/movies/server', (req, res) => {
-    const movies = [
-        {
-          "Title": "Avengers: Infinity War (server)",
-          "Year": "2018",
-          "imdbID": "tt4154756",
-          "Type": "movie",
-          "Poster": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg"
-        },
-        {
-          "Title": "Captain America: Civil War (server)",
-          "Year": "2016",
-          "imdbID": "tt3498820",
-          "Type": "movie",
-          "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg"
-        },
-        {
-          "Title": "World War Z (server)",
-          "Year": "2013",
-          "imdbID": "tt0816711",
-          "Type": "movie",
-          "Poster": "https://m.media-amazon.com/images/M/MV5BNDQ4YzFmNzktMmM5ZC00MDZjLTk1OTktNDE2ODE4YjM2MjJjXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
-        }
-      ];
-    res.status(200).json({movies})
-});
-
 //Retrieving data by id
 app.get('/api/movies/:id', async (req, res) => {
   const movie = await Movie.findById(req.params.id);
+  res.send(movie);
+});
+
+app.put('/api/movies/:id', async (req, res) => {
+  let movie = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true });
   res.send(movie);
 });
 
